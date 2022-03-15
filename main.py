@@ -1,18 +1,15 @@
 import hashlib
 import timeit
-
+import json
 
 def main():
-    with open("data", "rt") as file:
+    with open("wordlist-german.txt", "rt") as file:
         count = 0
         for line in file:
             count = count + 1
-            print("-----------------------------------------------------")
-            print(f"Line {count}")
-            print("")
+            print(f"Line {count}: {line}")
             possible_hashes = define_hashes()
             hash_values(possible_hashes, line)
-            print("")
 
 
 def define_hashes():
@@ -29,14 +26,19 @@ def define_hashes():
 
 def hash_values(hash_methods, data):
     data = data.replace("\n", "")
-    print(data)
     hashes = [data]
     data = data.encode("utf-8")
     for x in hash_methods:
         x.update(data)
-        print(f"{x.name} : {x.hexdigest()}")
         hashes.append(x.hexdigest())
-    print("all hashes generated")
+    with open("generated_hashes", "at") as file:
+        file.write(
+            str({
+                "data": data,
+                "sha1":
+
+            })
+        )
 
 
 if __name__ == "__main__":
